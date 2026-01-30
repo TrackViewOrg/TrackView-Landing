@@ -1,33 +1,33 @@
-'use client'
+'use client';
 
-import React, { useState } from 'react'
-import { CheckIcon, Plus, XIcon } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
-import { SlidingNumber } from '@/components/motion-primitives/sliding-number'
-import { TextMorph } from '@/components/motion-primitives/text-morph'
-import { TextEffect } from '@/components/motion-primitives/text-effect'
-import { BorderTrail } from '@/components/motion-primitives/border-trail'
-import StarBackground from '@/components/StarBackground'
-import { AnimatePresence, motion, Variants } from 'framer-motion'
-import { useSubscriptionModal } from '@/lib/hooks/subscription'
-import { RocketIcon } from '@/components/ui/rocket'
-import { ZapIcon } from '@/components/ui/zap'
-import { BoxIcon } from '@/components/ui/box'
-import Logo from '@/components/LogoAnimated'
+import React, { useState } from 'react';
+import { CheckIcon, Plus, XIcon } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { SlidingNumber } from '@/components/motion-primitives/sliding-number';
+import { TextMorph } from '@/components/motion-primitives/text-morph';
+import { TextEffect } from '@/components/motion-primitives/text-effect';
+import { BorderTrail } from '@/components/motion-primitives/border-trail';
+import StarBackground from '@/components/StarBackground';
+import { AnimatePresence, motion, Variants } from 'framer-motion';
+import { useSubscriptionModal } from '@/lib/hooks/subscription';
+import { RocketIcon } from '@/components/ui/rocket';
+import { ZapIcon } from '@/components/ui/zap';
+import { BoxIcon } from '@/components/ui/box';
+import Logo from '@/components/LogoAnimated';
 
 // --- Types & Constants ---
 type Plan = {
-  id: string
-  name: string
-  icon: React.ElementType
-  basePrice: number
-  features: string[]
-  highlight?: boolean
-  annualDiscount?: number
-}
+  id: string;
+  name: string;
+  icon: React.ElementType;
+  basePrice: number;
+  features: string[];
+  highlight?: boolean;
+  annualDiscount?: number;
+};
 
-export const HIGHLIGHT = 'text-[#dff976] italic'
+export const HIGHLIGHT = 'text-[#dff976] italic';
 
 const PLANS: Plan[] = [
   {
@@ -75,7 +75,7 @@ const PLANS: Plan[] = [
     ],
     annualDiscount: 0.25, // 30% Savings
   },
-]
+];
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -87,7 +87,7 @@ const containerVariants: Variants = {
     },
   },
   exit: { opacity: 0 },
-}
+};
 
 const itemVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
@@ -96,18 +96,18 @@ const itemVariants: Variants = {
     y: 0,
     transition: { duration: 0.4, ease: 'easeOut' },
   },
-}
+};
 
 export function SubscriptionOverlay() {
-  const { isOpen, close } = useSubscriptionModal()
-  const [isAnnual, setIsAnnual] = useState(false)
+  const { isOpen, close } = useSubscriptionModal();
+  const [isAnnual, setIsAnnual] = useState(false);
 
   const getDisplayPrice = (plan: Plan): number => {
-    if (plan.basePrice === 0) return 0
+    if (plan.basePrice === 0) return 0;
     return isAnnual
       ? plan.basePrice * (1 - (plan.annualDiscount || 0))
-      : plan.basePrice
-  }
+      : plan.basePrice;
+  };
 
   return (
     <AnimatePresence>
@@ -303,8 +303,8 @@ export function SubscriptionOverlay() {
                   <div className="flex flex-col gap-3 pt-2">
                     {plan.features.map((feature, i) => {
                       const isUpgradeFeature =
-                        feature.startsWith('Everything in')
-                      const Icon = isUpgradeFeature ? Plus : CheckIcon
+                        feature.startsWith('Everything in');
+                      const Icon = isUpgradeFeature ? Plus : CheckIcon;
 
                       return (
                         <div
@@ -314,7 +314,7 @@ export function SubscriptionOverlay() {
                           <Icon size={18} className="text-primary/70" />
                           <span>{feature}</span>
                         </div>
-                      )
+                      );
                     })}
                   </div>
                 </div>
@@ -327,5 +327,5 @@ export function SubscriptionOverlay() {
         </motion.div>
       )}
     </AnimatePresence>
-  )
+  );
 }

@@ -1,19 +1,19 @@
-'use client'
+'use client';
 
-import type { Variants } from 'motion/react'
-import { motion, useAnimation } from 'motion/react'
-import type { HTMLAttributes } from 'react'
-import { forwardRef, useCallback, useImperativeHandle, useRef } from 'react'
+import type { Variants } from 'motion/react';
+import { motion, useAnimation } from 'motion/react';
+import type { HTMLAttributes } from 'react';
+import { forwardRef, useCallback, useImperativeHandle, useRef } from 'react';
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils';
 
 export interface SparklesIconHandle {
-  startAnimation: () => void
-  stopAnimation: () => void
+  startAnimation: () => void;
+  stopAnimation: () => void;
 }
 
 interface SparklesIconProps extends HTMLAttributes<HTMLDivElement> {
-  size?: number
+  size?: number;
 }
 
 const SPARKLE_VARIANTS: Variants = {
@@ -29,7 +29,7 @@ const SPARKLE_VARIANTS: Variants = {
       bounce: 0.3,
     },
   },
-}
+};
 
 const STAR_VARIANTS: Variants = {
   initial: {
@@ -47,52 +47,52 @@ const STAR_VARIANTS: Variants = {
       mass: 0.4,
     },
   }),
-}
+};
 
 const SparklesIcon = forwardRef<SparklesIconHandle, SparklesIconProps>(
   ({ onMouseEnter, onMouseLeave, className, size = 28, ...props }, ref) => {
-    const starControls = useAnimation()
-    const sparkleControls = useAnimation()
-    const isControlledRef = useRef(false)
+    const starControls = useAnimation();
+    const sparkleControls = useAnimation();
+    const isControlledRef = useRef(false);
 
     useImperativeHandle(ref, () => {
-      isControlledRef.current = true
+      isControlledRef.current = true;
 
       return {
         startAnimation: () => {
-          sparkleControls.start('hover')
-          starControls.start('blink', { delay: 1 })
+          sparkleControls.start('hover');
+          starControls.start('blink', { delay: 1 });
         },
         stopAnimation: () => {
-          sparkleControls.start('initial')
-          starControls.start('initial')
+          sparkleControls.start('initial');
+          starControls.start('initial');
         },
-      }
-    })
+      };
+    });
 
     const handleMouseEnter = useCallback(
       (e: React.MouseEvent<HTMLDivElement>) => {
         if (isControlledRef.current) {
-          onMouseEnter?.(e)
+          onMouseEnter?.(e);
         } else {
-          sparkleControls.start('hover')
-          starControls.start('blink', { delay: 1 })
+          sparkleControls.start('hover');
+          starControls.start('blink', { delay: 1 });
         }
       },
       [onMouseEnter, sparkleControls, starControls]
-    )
+    );
 
     const handleMouseLeave = useCallback(
       (e: React.MouseEvent<HTMLDivElement>) => {
         if (isControlledRef.current) {
-          onMouseLeave?.(e)
+          onMouseLeave?.(e);
         } else {
-          sparkleControls.start('initial')
-          starControls.start('initial')
+          sparkleControls.start('initial');
+          starControls.start('initial');
         }
       },
       [sparkleControls, starControls, onMouseLeave]
-    )
+    );
 
     return (
       <div
@@ -139,10 +139,10 @@ const SparklesIcon = forwardRef<SparklesIconHandle, SparklesIconProps>(
           />
         </svg>
       </div>
-    )
+    );
   }
-)
+);
 
-SparklesIcon.displayName = 'SparklesIcon'
+SparklesIcon.displayName = 'SparklesIcon';
 
-export { SparklesIcon }
+export { SparklesIcon };

@@ -1,4 +1,4 @@
-const Icon = ({ color = "currentColor", size = 18, className, ...props }) => {
+const Icon = ({ color = 'currentColor', size = 18, className, ...props }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

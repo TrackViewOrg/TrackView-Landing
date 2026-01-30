@@ -1,14 +1,14 @@
-'use client'
-import { cn } from '@/lib/utils'
-import { motion, Transition } from 'motion/react'
+'use client';
+import { cn } from '@/lib/utils';
+import { motion, Transition } from 'motion/react';
 
 export type BorderTrailProps = {
-  className?: string
-  size?: number
-  transition?: Transition
-  onAnimationCompleteAction?: () => void
-  style?: React.CSSProperties
-}
+  className?: string;
+  size?: number;
+  transition?: Transition;
+  onAnimationCompleteAction?: () => void;
+  style?: React.CSSProperties;
+};
 
 export function BorderTrail({
   className,
@@ -21,7 +21,7 @@ export function BorderTrail({
     repeat: Infinity,
     duration: 5,
     ease: 'linear',
-  }
+  };
 
   return (
     <div className="pointer-events-none absolute inset-0 rounded-[inherit] border border-transparent [mask-image:linear-gradient(transparent,transparent),linear-gradient(#000,#000)] [mask-composite:intersect] [mask-clip:padding-box,border-box]">
@@ -39,5 +39,5 @@ export function BorderTrail({
         onAnimationComplete={onAnimationCompleteAction}
       />
     </div>
-  )
+  );
 }

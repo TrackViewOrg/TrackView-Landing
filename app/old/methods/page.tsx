@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
-import React from "react";
-import Link from "next/link";
+import React from 'react';
+import Link from 'next/link';
 import {
-  FileText,
-  ArrowUpRight,
   Activity,
-  MoveUpRight,
+  ArrowUpRight,
+  FileText,
   GitGraph,
-  Waves,
-  MousePointerClick,
-  TimerReset,
   type LucideIcon,
-} from "lucide-react";
-import { motion, type Variants } from "motion/react";
-import Reveal from "@/components/Reveal";
+  MousePointerClick,
+  MoveUpRight,
+  TimerReset,
+  Waves,
+} from 'lucide-react';
+import { motion, type Variants } from 'motion/react';
+import Reveal from '@/components/Reveal';
 
 // Interface for Method Data
 interface Method {
@@ -34,91 +34,91 @@ interface Method {
 // 1. Expanded Data Structure
 const METHODS: Method[] = [
   {
-    id: "1",
-    title: "Tire Slip Angle Optimization",
-    category: "Physics-Informed ML",
+    id: '1',
+    title: 'Tire Slip Angle Optimization',
+    category: 'Physics-Informed ML',
     icon: Activity,
     simple_desc:
-      "We analyse exactly how much your car slides before it loses grip, helping you ride the perfect edge of traction.",
+      'We analyse exactly how much your car slides before it loses grip, helping you ride the perfect edge of traction.',
     technical_desc:
-      "Utilising a Bayesian Neural Network to estimate the peak friction coefficient (μ) relative to slip angle variations in real-time telemetry.",
+      'Utilising a Bayesian Neural Network to estimate the peak friction coefficient (μ) relative to slip angle variations in real-time telemetry.',
     paper: {
-      title: "Estimation of Tire-Road Friction Coefficients (arXiv:2104.xxxxx)",
-      link: "https://arxiv.org",
+      title: 'Estimation of Tire-Road Friction Coefficients (arXiv:2104.xxxxx)',
+      link: 'https://arxiv.org',
     },
     sota: true,
   },
   {
-    id: "2",
-    title: "Trail Braking Decay Modeling",
-    category: "Stochastic Analysis",
+    id: '2',
+    title: 'Trail Braking Decay Modeling',
+    category: 'Stochastic Analysis',
     icon: MoveUpRight,
     simple_desc:
       "Calculates the perfect curve for releasing the brake as you turn in, keeping the car's nose pinned to the apex.",
     technical_desc:
-      "Applying Gaussian Process Regression to model the ideal brake pressure release gradient relative to steering input velocity.",
+      'Applying Gaussian Process Regression to model the ideal brake pressure release gradient relative to steering input velocity.',
     paper: {
       title:
-        "Optimal Braking Strategies in High-Speed Cornering (arXiv:1908.xxxxx)",
-      link: "https://arxiv.org",
+        'Optimal Braking Strategies in High-Speed Cornering (arXiv:1908.xxxxx)',
+      link: 'https://arxiv.org',
     },
   },
   {
-    id: "3",
-    title: "Suspension Damping FFT",
-    category: "Signal Processing",
+    id: '3',
+    title: 'Suspension Damping FFT',
+    category: 'Signal Processing',
     icon: Waves,
     simple_desc:
-      "Identifies if your suspension is too soft (bouncing) or too stiff (skipping) over bumps to maximise contact patch load.",
+      'Identifies if your suspension is too soft (bouncing) or too stiff (skipping) over bumps to maximise contact patch load.',
     technical_desc:
-      "Performing Fast Fourier Transform (FFT) analysis on damper position sensors to isolate resonant frequencies and calculate damping ratios.",
+      'Performing Fast Fourier Transform (FFT) analysis on damper position sensors to isolate resonant frequencies and calculate damping ratios.',
     paper: {
-      title: "Frequency Domain Analysis of Vehicle Dynamics (SAE 2020-01-xxxx)",
-      link: "https://sae.org",
+      title: 'Frequency Domain Analysis of Vehicle Dynamics (SAE 2020-01-xxxx)',
+      link: 'https://sae.org',
     },
   },
   {
-    id: "4",
-    title: "Ghost-Lap Trajectory",
-    category: "Genetic Algorithms",
+    id: '4',
+    title: 'Ghost-Lap Trajectory',
+    category: 'Genetic Algorithms',
     icon: GitGraph,
     simple_desc:
       "Instead of just showing your best lap, we generate a theoretical 'perfect' racing line based on your car's specific physics.",
     technical_desc:
-      "A localized Euler Spiral optimization algorithm that generates a time-optimal path constrained by vehicle g-force limits.",
+      'A localized Euler Spiral optimization algorithm that generates a time-optimal path constrained by vehicle g-force limits.',
     paper: {
       title:
-        "Time-Optimal Path Planning for Autonomous Racing (arXiv:2003.xxxxx)",
-      link: "https://arxiv.org",
+        'Time-Optimal Path Planning for Autonomous Racing (arXiv:2003.xxxxx)',
+      link: 'https://arxiv.org',
     },
   },
   {
-    id: "5",
-    title: "Input Smoothness Scoring",
-    category: "Pattern Recognition",
+    id: '5',
+    title: 'Input Smoothness Scoring',
+    category: 'Pattern Recognition',
     icon: MousePointerClick,
     simple_desc:
-      "Measures how jerky your steering and pedal inputs are, helping you unsettle the car less on entry and exit.",
+      'Measures how jerky your steering and pedal inputs are, helping you unsettle the car less on entry and exit.',
     technical_desc:
-      "Calculating the jerk (derivative of acceleration) of driver inputs and comparing against idealized smooth-spline baselines.",
+      'Calculating the jerk (derivative of acceleration) of driver inputs and comparing against idealized smooth-spline baselines.',
     paper: {
-      title: "Quantifying Driver Smoothness and Performance (ResearchGate)",
-      link: "https://researchgate.net",
+      title: 'Quantifying Driver Smoothness and Performance (ResearchGate)',
+      link: 'https://researchgate.net',
     },
   },
   {
-    id: "6",
-    title: "Optimal Shift Points",
-    category: "Multivariable Regression",
+    id: '6',
+    title: 'Optimal Shift Points',
+    category: 'Multivariable Regression',
     icon: TimerReset,
     simple_desc:
-      "Tells you exactly what RPM to shift at for every single gear to maximise average acceleration down the straight.",
+      'Tells you exactly what RPM to shift at for every single gear to maximise average acceleration down the straight.',
     technical_desc:
-      "Modeling the engine torque curve and aerodynamic drag forces to solve for intersection points of tractive force across gear ratios.",
+      'Modeling the engine torque curve and aerodynamic drag forces to solve for intersection points of tractive force across gear ratios.',
     paper: {
       title:
-        "Powertrain Optimization Strategies for Lap Time (arXiv:2201.xxxxx)",
-      link: "https://arxiv.org",
+        'Powertrain Optimization Strategies for Lap Time (arXiv:2201.xxxxx)',
+      link: 'https://arxiv.org',
     },
   },
 ];
@@ -141,7 +141,7 @@ const itemVariants: Variants = {
     opacity: 1,
     y: 0,
     transition: {
-      type: "spring",
+      type: 'spring',
       stiffness: 50,
       damping: 15,
     },

@@ -1,13 +1,13 @@
-import React from "react";
-import Section from "@/components/Section";
-import JournalView from "@/components/journal/JournalView";
+import React from 'react';
+import Section from '@/components/Section';
+import JournalView from '@/components/journal/JournalView';
 
 function Page() {
   return (
     <Section
-      title={"Journal"}
+      title={'Journal'}
       description={
-        "A collection of thoughts, updates, and engineering articles."
+        'A collection of thoughts, updates, and engineering articles.'
       }
     >
       <JournalView />

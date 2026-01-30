@@ -1,12 +1,12 @@
-import * as React from 'react'
-import { cn } from '@/lib/utils'
+import * as React from 'react';
+import { cn } from '@/lib/utils';
 
 const SegmentedBar = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, children, ...props }, ref) => {
-  const validChildren = React.Children.toArray(children)
-  const count = validChildren.length
+  const validChildren = React.Children.toArray(children);
+  const count = validChildren.length;
 
   return (
     <div
@@ -15,14 +15,14 @@ const SegmentedBar = React.forwardRef<
       {...props}
     >
       {validChildren.map((child, index) => {
-        if (!React.isValidElement(child)) return null
+        if (!React.isValidElement(child)) return null;
 
         // FIX: Cast child to a ReactElement with specific props
         // This solves both the "no-explicit-any" and "unknown props" errors
-        const element = child as React.ReactElement<{ className?: string }>
+        const element = child as React.ReactElement<{ className?: string }>;
 
-        const isFirst = index === 0
-        const isLast = index === count - 1
+        const isFirst = index === 0;
+        const isLast = index === count - 1;
 
         return React.cloneElement(element, {
           className: cn(
@@ -33,11 +33,11 @@ const SegmentedBar = React.forwardRef<
             // FIX: Now TypeScript knows 'className' exists on 'element.props'
             element.props.className
           ),
-        })
+        });
       })}
     </div>
-  )
-})
-SegmentedBar.displayName = 'SegmentedBar'
+  );
+});
+SegmentedBar.displayName = 'SegmentedBar';
 
-export { SegmentedBar }
+export { SegmentedBar };

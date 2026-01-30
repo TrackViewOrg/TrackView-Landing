@@ -1,9 +1,9 @@
-'use client'
+'use client';
 
-import Link from 'next/link'
-import { motion, Variants } from 'framer-motion'
-import TrackViewIcon from '@/components/TrackViewIcon'
-import { homeRoute } from '@/lib/constants'
+import Link from 'next/link';
+import { motion, Variants } from 'framer-motion';
+import TrackViewIcon from '@/components/TrackViewIcon';
+import { homeRoute } from '@/lib/constants';
 
 const containerVariants: Variants = {
   rest: {
@@ -14,7 +14,7 @@ const containerVariants: Variants = {
     gap: '0.75rem',
     transition: { duration: 0.3, ease: 'easeOut' },
   },
-}
+};
 
 const textVelocityVariants: Variants = {
   rest: {
@@ -33,7 +33,7 @@ const textVelocityVariants: Variants = {
       },
     },
   },
-}
+};
 
 export default function Logo() {
   return (
@@ -62,5 +62,5 @@ export default function Logo() {
         </div>
       </motion.div>
     </Link>
-  )
+  );
 }

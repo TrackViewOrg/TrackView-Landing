@@ -1,8 +1,8 @@
-import * as React from "react";
-import { Slot } from "@radix-ui/react-slot";
-import { cva, type VariantProps } from "class-variance-authority";
+import * as React from 'react';
+import { Slot } from '@radix-ui/react-slot';
+import { cva, type VariantProps } from 'class-variance-authority';
 
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
   "cursor-pointer inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm text-sm font-medium transition-all duration-200 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none aria-invalid:border-destructive",
@@ -10,57 +10,57 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          "bg-[#dff976] text-background hover:bg-[#dff976]/80  data-[state=open]:bg-accent/60 transition-colors duration-200 rounded-[3px]",
+          'bg-[#dff976] text-background hover:bg-[#dff976]/80  data-[state=open]:bg-accent/60 transition-colors duration-200 rounded-[3px]',
         default:
-          "bg-primary-foreground/80 text-muted-foreground hover:bg-primary-foreground",
+          'bg-primary-foreground/80 text-muted-foreground hover:bg-primary-foreground',
         destructive:
-          "bg-destructive/10 text-destructive hover:bg-destructive/20",
+          'bg-destructive/10 text-destructive hover:bg-destructive/20',
         outline:
-          "border bg-background hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
+          'border bg-background hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50',
         secondary:
-          "bg-input/20 text-muted-foreground hover:text-foreground/90 hover:bg-input/30",
-        topbar: "bg-track text-muted hover:text-black hover:bg-track/70",
+          'bg-input/20 text-muted-foreground hover:text-foreground/90 hover:bg-input/30',
+        topbar: 'bg-track text-muted hover:text-black hover:bg-track/70',
         ghost:
-          "bg-transparent text-muted-foreground border-none hover:bg-muted hover:text-accent-foreground dark:hover:bg-input/40",
+          'bg-transparent text-muted-foreground border-none hover:bg-muted hover:text-accent-foreground dark:hover:bg-input/40',
         cutted:
-          "bg-muted/60 text-muted-foreground border border-muted-foreground border-dashed hover:bg-muted hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
-        selected: "bg-accent/70 text-foreground",
-        accent: "bg-foreground border-foreground border text-background",
+          'bg-muted/60 text-muted-foreground border border-muted-foreground border-dashed hover:bg-muted hover:text-accent-foreground',
+        link: 'text-primary underline-offset-4 hover:underline',
+        selected: 'bg-accent/70 text-foreground',
+        accent: 'bg-foreground border-foreground border text-background',
         navbarItem:
-          "text-muted-foreground hover:bg-muted hover:text-foreground transition-all",
+          'text-muted-foreground hover:bg-muted hover:text-foreground transition-all',
       },
       size: {
-        default: "h-9 px-4 py-2 has-[>svg]:px-3",
-        sm: "h-8 rounded-sm gap-1.5 px-3 has-[>svg]:px-2.5",
-        xs: "rounded-none gap-1.5 px-3 has-[>svg]:px-2.5",
+        default: 'h-9 px-4 py-2 has-[>svg]:px-3',
+        sm: 'h-8 rounded-sm gap-1.5 px-3 has-[>svg]:px-2.5',
+        xs: 'rounded-none gap-1.5 px-3 has-[>svg]:px-2.5',
         navbar:
-          "h-6 px-2.5 gap-1.25 text-xs [&_svg:not([class*=size-])]:size-3.5",
-        icon: "size-9",
-        "icon-sm": "size-8",
-        "icon-lg": "size-10",
+          'h-6 px-2.5 gap-1.25 text-xs [&_svg:not([class*=size-])]:size-3.5',
+        icon: 'size-9',
+        'icon-sm': 'size-8',
+        'icon-lg': 'size-10',
       },
     },
     defaultVariants: {
-      variant: "default",
-      size: "default",
+      variant: 'default',
+      size: 'default',
     },
-  },
+  }
 );
 
 export interface ButtonProps
-  extends React.ComponentProps<"button">, VariantProps<typeof buttonVariants> {
+  extends React.ComponentProps<'button'>, VariantProps<typeof buttonVariants> {
   asChild?: boolean;
 }
 
 function Button({
   className,
-  variant = "default",
-  size = "default",
+  variant = 'default',
+  size = 'default',
   asChild = false,
   ...props
 }: ButtonProps) {
-  const Comp = asChild ? Slot : "button";
+  const Comp = asChild ? Slot : 'button';
 
   return (
     <Comp

@@ -1,56 +1,56 @@
-import type { Metadata } from "next";
-import { Instrument_Serif, Space_Grotesk, Space_Mono } from "next/font/google";
-import localFont from "next/font/local";
-import "./globals.css";
-import Navbar from "@/components/Navbar";
-import { ThemeProvider } from "next-themes";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import {SubscriptionOverlay} from "@/components/subscription-overlay";
+import type { Metadata } from 'next';
+import { Instrument_Serif, Space_Grotesk, Space_Mono } from 'next/font/google';
+import localFont from 'next/font/local';
+import './globals.css';
+import Navbar from '@/components/Navbar';
+import { ThemeProvider } from 'next-themes';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { SubscriptionOverlay } from '@/components/subscription-overlay';
 
 // 👇 THIS LINE FIXES THE CACHING ISSUE
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 const geistSans = Space_Grotesk({
-  variable: "--font-space",
-  subsets: ["latin"],
+  variable: '--font-space',
+  subsets: ['latin'],
 });
 
 const spaceMono = Space_Mono({
-  variable: "--font-mono",
-  subsets: ["latin"],
-  weight: ["400", "700"],
+  variable: '--font-mono',
+  subsets: ['latin'],
+  weight: ['400', '700'],
 });
 
 // Fix 1: Added weight property (Instrument Serif usually only supports 400)
 const instrumentSerif = Instrument_Serif({
-  variable: "--font-serif",
-  subsets: ["latin"],
-  weight: "400",
+  variable: '--font-serif',
+  subsets: ['latin'],
+  weight: '400',
 });
 
 const archivo = localFont({
   src: [
     {
-      path: "../public/fonts/Archivo-SemiExpanded-Medium.ttf",
-      weight: "500",
-      style: "normal",
+      path: '../public/fonts/Archivo-SemiExpanded-Medium.ttf',
+      weight: '500',
+      style: 'normal',
     },
     {
-      path: "../public/fonts/Archivo-SemiExpanded-Bold.ttf",
-      weight: "700",
-      style: "normal",
+      path: '../public/fonts/Archivo-SemiExpanded-Bold.ttf',
+      weight: '700',
+      style: 'normal',
     },
     {
-      path: "../public/fonts/Archivo-SemiExpanded-Black.ttf",
-      weight: "900",
-      style: "normal",
+      path: '../public/fonts/Archivo-SemiExpanded-Black.ttf',
+      weight: '900',
+      style: 'normal',
     },
   ],
-  variable: "--font-archivo",
+  variable: '--font-archivo',
 });
 
 export const metadata: Metadata = {
-  title: "TrackView",
+  title: 'TrackView',
 };
 
 export default async function RootLayout({
@@ -69,10 +69,14 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <main className={"h-screen w-screen flex flex-col overflow-hidden pb-30 md:pb-0"}>
+          <main
+            className={
+              'h-screen w-screen flex flex-col overflow-hidden pb-30 md:pb-0'
+            }
+          >
             <Navbar />
-            <ScrollArea className={"w-full h-full"}>
-              <div className={"pt-[var(--navbar-height,60px)] min-h-full"}>
+            <ScrollArea className={'w-full h-full'}>
+              <div className={'pt-[var(--navbar-height,60px)] min-h-full'}>
                 {children}
               </div>
             </ScrollArea>

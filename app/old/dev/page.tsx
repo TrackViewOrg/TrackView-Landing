@@ -1,128 +1,120 @@
-"use client";
+'use client';
 
-import React from "react";
-import {
-  CheckCircle2,
-  CircleDashed,
-  Loader2,
-  Calendar,
-  ArrowUpRight,
-  Search,
-  Filter,
-} from "lucide-react";
+import React from 'react';
+import { CircleDashed, Filter, Loader2, Search } from 'lucide-react';
 
 // 1. Expanded Mock Data to simulate volume
 const UPDATES = [
   // --- ACTIVE / PLANNED ---
   {
-    id: "1",
-    title: "Real-time Collaboration",
-    status: "in-progress",
-    date: "Q3 2024",
-    category: "Feature",
-    description: "Multi-user editing with live cursors.",
-    tags: ["WebSockets"],
+    id: '1',
+    title: 'Real-time Collaboration',
+    status: 'in-progress',
+    date: 'Q3 2024',
+    category: 'Feature',
+    description: 'Multi-user editing with live cursors.',
+    tags: ['WebSockets'],
   },
   {
-    id: "2",
-    title: "API V3",
-    status: "in-progress",
-    date: "Q4 2024",
-    category: "Backend",
-    description: "GraphQL support and faster response times.",
-    tags: ["API"],
+    id: '2',
+    title: 'API V3',
+    status: 'in-progress',
+    date: 'Q4 2024',
+    category: 'Backend',
+    description: 'GraphQL support and faster response times.',
+    tags: ['API'],
   },
   {
-    id: "3",
-    title: "Mobile Application",
-    status: "planned",
-    date: "Late 2024",
-    category: "Platform",
-    description: "Native iOS/Android view for dashboards.",
-    tags: ["Mobile"],
+    id: '3',
+    title: 'Mobile Application',
+    status: 'planned',
+    date: 'Late 2024',
+    category: 'Platform',
+    description: 'Native iOS/Android view for dashboards.',
+    tags: ['Mobile'],
   },
   {
-    id: "4",
-    title: "AI Analysis",
-    status: "planned",
-    date: "TBD",
-    category: "Exp.",
-    description: "LLM-based anomaly summaries.",
-    tags: ["AI"],
+    id: '4',
+    title: 'AI Analysis',
+    status: 'planned',
+    date: 'TBD',
+    category: 'Exp.',
+    description: 'LLM-based anomaly summaries.',
+    tags: ['AI'],
   },
 
   // --- COMPLETED (History) ---
   // Simulating many entries to show how the list handles volume
   {
-    id: "5",
-    title: "Advanced Data Filters",
-    status: "completed",
-    version: "v2.1.0",
-    date: "2023-10-12",
-    category: "Core",
-    description: "Added regex matching and boolean logic groups.",
-    tags: ["UX"],
+    id: '5',
+    title: 'Advanced Data Filters',
+    status: 'completed',
+    version: 'v2.1.0',
+    date: '2023-10-12',
+    category: 'Core',
+    description: 'Added regex matching and boolean logic groups.',
+    tags: ['UX'],
   },
   {
-    id: "6",
-    title: "Dark Mode Overhaul",
-    status: "completed",
-    version: "v2.0.5",
-    date: "2023-09-28",
-    category: "Design",
-    description: "High-contrast dark mode implementation.",
-    tags: ["UI"],
+    id: '6',
+    title: 'Dark Mode Overhaul',
+    status: 'completed',
+    version: 'v2.0.5',
+    date: '2023-09-28',
+    category: 'Design',
+    description: 'High-contrast dark mode implementation.',
+    tags: ['UI'],
   },
   {
-    id: "7",
-    title: "SSO Integration",
-    status: "completed",
-    version: "v2.0.2",
-    date: "2023-09-15",
-    category: "Security",
-    description: "SAML and OIDC support for enterprise clients.",
-    tags: ["Auth"],
+    id: '7',
+    title: 'SSO Integration',
+    status: 'completed',
+    version: 'v2.0.2',
+    date: '2023-09-15',
+    category: 'Security',
+    description: 'SAML and OIDC support for enterprise clients.',
+    tags: ['Auth'],
   },
   {
-    id: "8",
-    title: "API Rate Limiting",
-    status: "completed",
-    version: "v2.0.1",
-    date: "2023-08-15",
-    category: "Backend",
-    description: "Sliding window limits for stability.",
-    tags: ["Infra"],
+    id: '8',
+    title: 'API Rate Limiting',
+    status: 'completed',
+    version: 'v2.0.1',
+    date: '2023-08-15',
+    category: 'Backend',
+    description: 'Sliding window limits for stability.',
+    tags: ['Infra'],
   },
   {
-    id: "9",
-    title: "Dashboard PDF Export",
-    status: "completed",
-    version: "v1.9.0",
-    date: "2023-07-22",
-    category: "Feature",
-    description: "High-res PDF generation for reports.",
-    tags: ["Export"],
+    id: '9',
+    title: 'Dashboard PDF Export',
+    status: 'completed',
+    version: 'v1.9.0',
+    date: '2023-07-22',
+    category: 'Feature',
+    description: 'High-res PDF generation for reports.',
+    tags: ['Export'],
   },
   {
-    id: "10",
-    title: "User Roles",
-    status: "completed",
-    version: "v1.8.5",
-    date: "2023-06-10",
-    category: "Admin",
-    description: "Granular permission settings for teams.",
-    tags: ["Access"],
+    id: '10',
+    title: 'User Roles',
+    status: 'completed',
+    version: 'v1.8.5',
+    date: '2023-06-10',
+    category: 'Admin',
+    description: 'Granular permission settings for teams.',
+    tags: ['Access'],
   },
 ];
 
 export default function UpdatesPage() {
   // Grouping Logic
-  const inProgress = UPDATES.filter((u) => u.status === "in-progress");
-  const planned = UPDATES.filter((u) => u.status === "planned");
+  const inProgress = UPDATES.filter((u) => u.status === 'in-progress');
+  const planned = UPDATES.filter((u) => u.status === 'planned');
 
   // Sort completed by date descending
-  const completed = UPDATES.filter((u) => u.status === "completed").sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+  const completed = UPDATES.filter((u) => u.status === 'completed').sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );
 
   return (
@@ -253,7 +245,7 @@ function RoadmapCard({ item }) {
 function ChangelogItem({ item }) {
   // Format date nicely
   const dateObj = new Date(item.date);
-  const month = dateObj.toLocaleString("default", { month: "short" });
+  const month = dateObj.toLocaleString('default', { month: 'short' });
   const day = dateObj.getDate();
   const year = dateObj.getFullYear();
 

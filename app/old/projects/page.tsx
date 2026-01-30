@@ -1,62 +1,62 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import { ArrowUpRight, Github, Star, GitFork } from "lucide-react";
-import Reveal from "@/components/Reveal";
-import { motion } from "motion/react";
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { ArrowUpRight, Github, Star } from 'lucide-react';
+import Reveal from '@/components/Reveal';
+import { motion } from 'motion/react';
 
 // 1. Mock Data with sizing logic
 const PROJECTS = [
   {
-    id: "trackview-core",
-    title: "TrackView Core",
+    id: 'trackview-core',
+    title: 'TrackView Core',
     description:
-      "The intelligent data visualization engine powering our analytics. Handles millions of data points with WebGL acceleration.",
-    tags: ["TypeScript", "WebGL", "Rust"],
+      'The intelligent data visualization engine powering our analytics. Handles millions of data points with WebGL acceleration.',
+    tags: ['TypeScript', 'WebGL', 'Rust'],
     stars: 1240,
-    size: "large", // spans 2 cols, 2 rows
+    size: 'large', // spans 2 cols, 2 rows
     image:
-      "https://cdn.jsdelivr.net/gh/TrackViewOrg/TrackView-Data@3669147/Blog/headers/trackview-core.webp", // Mock URL
-    link: "https://github.com",
+      'https://cdn.jsdelivr.net/gh/TrackViewOrg/TrackView-Data@3669147/Blog/headers/trackview-core.webp', // Mock URL
+    link: 'https://github.com',
   },
   {
-    id: "ui-kit",
-    title: "Design System",
+    id: 'ui-kit',
+    title: 'Design System',
     description:
-      "An open-source component library focused on accessibility and dark mode.",
-    tags: ["React", "Tailwind"],
+      'An open-source component library focused on accessibility and dark mode.',
+    tags: ['React', 'Tailwind'],
     stars: 85,
-    size: "tall", // spans 1 col, 2 rows
-    link: "https://github.com",
+    size: 'tall', // spans 1 col, 2 rows
+    link: 'https://github.com',
   },
   {
-    id: "cli",
-    title: "TV-CLI",
-    description: "Command line tool for scaffolding dashboards instantly.",
-    tags: ["Go"],
+    id: 'cli',
+    title: 'TV-CLI',
+    description: 'Command line tool for scaffolding dashboards instantly.',
+    tags: ['Go'],
     stars: 342,
-    size: "small", // spans 1 col, 1 row
-    link: "https://github.com",
+    size: 'small', // spans 1 col, 1 row
+    link: 'https://github.com',
   },
   {
-    id: "docs",
-    title: "Documentation",
-    description: "Comprehensive guides and API references.",
-    tags: ["MDX", "Next.js"],
+    id: 'docs',
+    title: 'Documentation',
+    description: 'Comprehensive guides and API references.',
+    tags: ['MDX', 'Next.js'],
     stars: 40,
-    size: "small",
-    link: "https://github.com",
+    size: 'small',
+    link: 'https://github.com',
   },
   {
-    id: "mobile",
-    title: "Mobile Companion",
+    id: 'mobile',
+    title: 'Mobile Companion',
     description:
-      "Monitor your stats on the go with real-time push notifications.",
-    tags: ["React Native"],
+      'Monitor your stats on the go with real-time push notifications.',
+    tags: ['React Native'],
     stars: 120,
-    size: "wide", // spans 2 cols, 1 row
-    link: "https://github.com",
+    size: 'wide', // spans 2 cols, 1 row
+    link: 'https://github.com',
   },
 ];
 
@@ -105,15 +105,15 @@ function BentoCard({ project, index }: { project: any; index: number }) {
   // Determine CSS classes based on size prop
   const getSizeClasses = (size: string) => {
     switch (size) {
-      case "large":
-        return "md:col-span-2 md:row-span-2";
-      case "tall":
-        return "md:col-span-1 md:row-span-2";
-      case "wide":
-        return "md:col-span-2 md:row-span-1";
-      case "small":
+      case 'large':
+        return 'md:col-span-2 md:row-span-2';
+      case 'tall':
+        return 'md:col-span-1 md:row-span-2';
+      case 'wide':
+        return 'md:col-span-2 md:row-span-1';
+      case 'small':
       default:
-        return "md:col-span-1 md:row-span-1";
+        return 'md:col-span-1 md:row-span-1';
     }
   };
 
