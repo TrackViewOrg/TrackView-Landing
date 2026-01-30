@@ -3,54 +3,20 @@
 import React, { useEffect, useState } from 'react'
 import { Loader2, Search } from "lucide-react"
 import Link from "next/link"
-
-// --- Types ---
-interface BlogPost {
-    id: string
-    title: string
-    created_at: number
-    [key: string]: unknown
-}
-
-interface PostsResponse {
-    posts: BlogPost[]
-}
-
-// --- Config ---
-const REPO_USER = 'TrackViewOrg'
-const REPO_NAME = 'TrackView-Data'
-const DEFAULT_BRANCH = 'main'
+import { BlogPost, getPosts } from "@/lib/github";
 
 export default function JournalView() {
     const [posts, setPosts] = useState<BlogPost[]>([])
     const [loading, setLoading] = useState(true)
     const [searchQuery, setSearchQuery] = useState('')
-
-    // Default to @main, updated to specific SHA in useEffect
-    const [cdnUrl, setCdnUrl] = useState(`https://cdn.jsdelivr.net/gh/${REPO_USER}/${REPO_NAME}@${DEFAULT_BRANCH}`)
+    const [cdnUrl, setCdnUrl] = useState('')
 
     useEffect(() => {
         const fetchData = async () => {
-            let currentBaseUrl = cdnUrl
-
             try {
-                // 1. Fetch SHA to prevent caching issues (Fixes JSON parse error)
-                const commitRes = await fetch(`https://api.github.com/repos/${REPO_USER}/${REPO_NAME}/commits/${DEFAULT_BRANCH}`)
-
-                if (commitRes.ok) {
-                    const commitData = await commitRes.json()
-                    currentBaseUrl = `https://cdn.jsdelivr.net/gh/${REPO_USER}/${REPO_NAME}@${commitData.sha}`
-                    setCdnUrl(currentBaseUrl)
-                }
-
-                // 2. Fetch JSON
-                const postsRes = await fetch(`${currentBaseUrl}/Blog/posts.json`)
-
-                if (!postsRes.ok) throw new Error(`Failed to fetch posts: ${postsRes.status}`)
-
-                const postsData: PostsResponse = await postsRes.json()
-                setPosts(postsData.posts || [])
-
+                const { posts, cdnUrl } = await getPosts();
+                setPosts(posts);
+                setCdnUrl(cdnUrl);
             } catch (err) {
                 console.error("Failed to load journal entries:", err)
             } finally {
@@ -59,7 +25,6 @@ export default function JournalView() {
         }
 
         fetchData()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const filteredPosts = posts.filter(post =>

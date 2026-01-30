@@ -8,7 +8,7 @@ interface PlusMinusIconProps {
 
 export default function PlusMinusIcon({
                                           isOpen,
-                                          size = 24,
+                                          size = 32,
                                           color = "currentColor",
                                       }: PlusMinusIconProps) {
     const verticalVariants = {

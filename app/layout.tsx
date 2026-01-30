@@ -5,6 +5,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { ThemeProvider } from "next-themes";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import {SubscriptionOverlay} from "@/components/subscription-overlay";
 
 // 👇 THIS LINE FIXES THE CACHING ISSUE
 export const dynamic = "force-dynamic";
@@ -68,13 +69,15 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <main className={"h-screen w-screen flex flex-col overflow-hidden"}>
+          <main className={"h-screen w-screen flex flex-col overflow-hidden pb-30 md:pb-0"}>
             <Navbar />
             <ScrollArea className={"w-full h-full"}>
               <div className={"pt-[var(--navbar-height,60px)] min-h-full"}>
                 {children}
               </div>
             </ScrollArea>
+
+            <SubscriptionOverlay />
           </main>
         </ThemeProvider>
       </body>

@@ -5,18 +5,21 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import {ArrowRight, ArrowUpRightIcon} from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 import PlusMinusIcon from "@/components/PlusMinusIcon";
 
 const navItems = [
   {
     name: "Compatibility",
-    path: "/compatibility", // Path won't be used for linking, just ID
+    path: "/compatibility",
     subItems: [
       { name: "Tracks", path: "/tracks" },
       { name: "Cars", path: "/cars" },
       { name: "Games", path: "/games" },
     ],
   },
+  { name: "Features", path: "/features" },
   { name: "Journal", path: "/journal" },
   { name: "Roadmap", path: "/roadmap" },
   { name: "About", path: "/about" },
@@ -26,6 +29,7 @@ const navItems = [
 function Navbar() {
   const currentPath = usePathname();
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const navRef = useRef<HTMLDivElement>(null);
 
@@ -40,11 +44,12 @@ function Navbar() {
       const height = navRef.current.offsetHeight;
       document.documentElement.style.setProperty("--navbar-height", `${height}px`);
     }
-  }, []); // Only run once on mount (or if navRef changes), as height is now static
+  }, []);
 
-  // Close submenu on path change
+  // Close submenu and mobile menu on path change
   useEffect(() => {
     setActiveSubmenu(null);
+    setIsMobileMenuOpen(false);
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
@@ -61,7 +66,7 @@ function Navbar() {
       const currentScrollY = scrollableViewport.scrollTop;
 
       // Check if we are at the top (within 200px)
-      if (currentScrollY <= 200) {
+      if (currentScrollY <= 10) {
         setIsAtTop(true);
       } else {
         setIsAtTop(false);
@@ -112,41 +117,48 @@ function Navbar() {
   };
 
   // 2. When leaving, wait 400ms before closing.
-  // If the user enters the sub-bar before 400ms, handleMouseEnter fires and cancels this.
   const handleMouseLeave = () => {
     timeoutRef.current = setTimeout(() => {
       setActiveSubmenu(null);
       timeoutRef.current = null;
-    }, 300);
+    }, 100);
   };
+
+  // Flatten items for mobile
+  const mobileNavItems = navItems.flatMap((item) => {
+    if (item.subItems && item.subItems.length > 0) {
+      return item.subItems;
+    }
+    return item;
+  });
 
   return (
       <div
           ref={navRef}
           className={cn(
-              "w-full flex flex-col z-50 transition-transform duration-300 fixed top-0 left-0",
+              "w-full flex flex-col z-50 transition-transform duration-200 fixed top-0 left-0",
               {
-                  "-translate-y-full": isScrollingDown,
+                  "-translate-y-full": isScrollingDown && !isMobileMenuOpen,
               }
           )}
       >
         {/* --- TOP BAR --- */}
         <div
             className={cn(
-              "w-full py-2.5 px-50 bg-background flex items-center justify-between border-border relative z-20 transition-all duration-300",
-              // Show border if NOT at top OR if submenu is active
-              (!isAtTop || activeSubmenu) ? "border-b border-border" : "border-b-transparent"
+              "w-full py-2.5 px-4 md:px-8 lg:px-12 bg-background/90 backdrop-blur-xl flex items-center justify-between border-border relative z-20 transition-all duration-200",
+              (!isAtTop || activeSubmenu || isMobileMenuOpen) ? "border-b border-border" : "border-b-transparent"
             )}
         >
           <div className={"gap-5 flex items-center"}>
             <Link href={"/"} className={"gap-2 flex items-center"}>
               <TrackViewIcon className="dark:bg-background dark:border-background h-8 w-8 rounded-sm border bg-[#101010] p-1 text-[#dff976]" />
             </Link>
-            <div className={"flex items-center gap-0.5"}>
+            
+            {/* Desktop Navigation */}
+            <div className={"hidden lg:flex items-center gap-0.5"}>
               {navItems.map((item, i) => {
                 const hasSubItems = item.subItems && item.subItems.length > 0;
 
-                // Common Button Style
                 const buttonContent = (
                     <Button
                         variant={"navbarItem"}
@@ -163,18 +175,15 @@ function Navbar() {
                 return (
                     <div
                         key={i}
-                        // Apply hover logic here to the wrapper
                         onMouseEnter={() =>
                             hasSubItems ? handleMouseEnter(item.name) : handleMouseEnter("")
                         }
                         onMouseLeave={handleMouseLeave}
-                        className="relative" // purely for positioning context if needed later
+                        className="relative"
                     >
                       {hasSubItems ? (
-                          // RENDER AS DIV (Non-clickable)
                           <div className="cursor-default">{buttonContent}</div>
                       ) : (
-                          // RENDER AS LINK (Clickable)
                           <Link href={item.path}>{buttonContent}</Link>
                       )}
                     </div>
@@ -183,8 +192,8 @@ function Navbar() {
             </div>
           </div>
 
-          {/* RIGHT SIDE ACTIONS */}
-          <div className={"flex items-center gap-2"}>
+          {/* RIGHT SIDE ACTIONS (Desktop) */}
+          <div className={"hidden lg:flex items-center gap-2"}>
             <Link href={"/demo"}>
               <Button
                   variant={"navbarItem"}
@@ -212,46 +221,96 @@ function Navbar() {
                 Sign In
               </Button>
             </Link>
-            <Button variant={"link"} size={"icon-sm"}>
-              <PlusMinusIcon isOpen={false}/>
+          </div>
+
+          {/* Mobile Menu Toggle */}
+          <div className="lg:hidden flex items-center">
+            <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="text-foreground hover:bg-transparent"
+            >
+              <PlusMinusIcon isOpen={isMobileMenuOpen} />
             </Button>
           </div>
         </div>
 
-        {/* --- SUB BARS (Rendered Absolutely) --- */}
-        {navItems.map((item, index) => {
-          if (!item.subItems || item.subItems.length === 0) return null;
-          const isOpen = activeSubmenu === item.name;
+        {/* --- SUB BARS (Desktop - Rendered Absolutely) --- */}
+        <div className="hidden lg:block">
+            {navItems.map((item, index) => {
+              if (!item.subItems || item.subItems.length === 0) return null;
+              const isOpen = activeSubmenu === item.name;
 
-          return (
-              <div
-                  key={`${item.name}-sub`}
-                  // Crucial: Apply the same mouse handlers to the sub-bar
-                  onMouseEnter={() => handleMouseEnter(item.name)}
-                  onMouseLeave={handleMouseLeave}
-                  className={cn(
-                      "absolute top-full left-0 w-full py-2.5 px-50 bg-background flex items-center justify-between border-border border-b transition-all duration-300 -z-10",
-                      isOpen ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-0 pointer-events-none"
-                  )}
-              >
-                <div className={"flex items-center gap-2"}>
-                  {item.subItems.map((subItem, subIndex) => (
-                      <Link key={subIndex} href={subItem.path}>
-                        <Button
-                            variant={"navbarItem"}
-                            size={"navbar"}
-                            className={`uppercase tracking-wider ${
-                                currentPath === subItem.path && "bg-muted/70 text-foreground"
-                            }`}
-                        >
-                          {subItem.name}
-                        </Button>
-                      </Link>
-                  ))}
-                </div>
+              return (
+                  <div
+                      key={`${item.name}-sub`}
+                      onMouseEnter={() => handleMouseEnter(item.name)}
+                      onMouseLeave={handleMouseLeave}
+                      className={cn(
+                          "absolute top-full left-0 w-full py-2.5 px-4 md:px-8 lg:px-12 bg-background/90 backdrop-blur-xl flex items-center justify-between border-border border-b transition-all duration-200 -z-10",
+                          isOpen ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-0 pointer-events-none"
+                      )}
+                  >
+                    <div className={"flex items-center gap-2"}>
+                      {item.subItems.map((subItem, subIndex) => (
+                          <Link key={subIndex} href={subItem.path}>
+                            <Button
+                                variant={"navbarItem"}
+                                size={"navbar"}
+                                className={`uppercase tracking-wider ${
+                                    currentPath === subItem.path && "bg-muted/70 text-foreground"
+                                }`}
+                            >
+                              {subItem.name}
+                            </Button>
+                          </Link>
+                      ))}
+                    </div>
+                  </div>
+              );
+            })}
+        </div>
+
+        {/* --- MOBILE MENU --- */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.2, ease: "easeInOut" }}
+              className="lg:hidden fixed left-0 w-full bg-background/95 backdrop-blur-2xl z-10 overflow-y-auto border-b border-border shadow-2xl pb-35"
+              style={{
+                top: "var(--navbar-height, 60px)",
+                height: "calc(100vh - var(--navbar-height, 60px))"
+              }}
+            >
+              <div className="flex flex-col gap-2">
+                {mobileNavItems.map((item, i) => (
+                  <motion.div
+                    key={item.path}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.05, duration: 0.3 }}
+                  >
+                    <Link
+                      href={item.path}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="group flex items-center justify-between py-4 border-b border-border/40 hover:border-primary/50 transition-colors px-5"
+                    >
+                      <span className="text-3xl uppercase font-medium text-foreground group-hover:text-primary transition-colors">
+                        {item.name}
+                      </span>
+
+                      <ArrowUpRightIcon />
+                    </Link>
+                  </motion.div>
+                ))}
               </div>
-          );
-        })}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
   );
 }
