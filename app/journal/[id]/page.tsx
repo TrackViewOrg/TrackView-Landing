@@ -3,8 +3,11 @@ import Link from 'next/link';
 import { Calendar } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
 import { getArticleData } from '@/lib/github';
-import { JOURNAL_MARKDOWN_THEME } from '@/components/MarkdownStyles';
+import { LEGAL_MARKDOWN_THEME } from '@/components/MarkdownStyles';
+import 'katex/dist/katex.min.css';
 
 // ------------------------------------------------------------------
 // 2. Main Component
@@ -20,6 +23,19 @@ export default async function ArticlePage({
   if (!data) return <NotFoundState />;
 
   const { metadata, content, baseUrl } = data;
+
+  // Preprocess content to replace LaTeX delimiters
+  // We use split/join to robustly replace \[ with $$ and \( with $
+  const processedContent = content
+    .split('\\\\[')
+    .join('$$')
+    .split('\\\\]')
+    .join('$$')
+    .split('\\\\(')
+    .join('$')
+    .split('\\\\)')
+    .join('$');
+
   const headerImage = `${baseUrl}/Blog/headers/${id}.webp`;
 
   const formattedDate = new Date(metadata.created_at * 1000).toLocaleDateString(
@@ -68,10 +84,11 @@ export default async function ArticlePage({
         {/* Markdown Content */}
         <div className="max-w-none">
           <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            components={JOURNAL_MARKDOWN_THEME}
+            remarkPlugins={[remarkMath, remarkGfm]}
+            rehypePlugins={[rehypeKatex]}
+            components={LEGAL_MARKDOWN_THEME}
           >
-            {content}
+            {processedContent}
           </ReactMarkdown>
         </div>
       </article>

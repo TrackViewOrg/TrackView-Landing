@@ -6,7 +6,6 @@ import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ShootingStars from '@/components/StarBackground';
 import { cn } from '@/lib/utils';
-import Logo from '@/components/LogoAnimated';
 
 // --- CONTENT CONSTANTS ---
 
@@ -48,7 +47,6 @@ export default function NotFoundPage() {
     <main className="font-archivo bg-background text-foreground relative flex h-screen w-full items-center justify-center overflow-hidden selection:text-black">
       {/* 1. Background Elements */}
       <ShootingStars />
-      <Logo />
 
       {/* 2. Main Centered Content */}
       <div

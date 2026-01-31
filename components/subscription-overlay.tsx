@@ -295,8 +295,14 @@ export function SubscriptionOverlay() {
                     variant={plan.basePrice === 0 ? 'secondary' : 'accent'}
                     className={`${plan.highlight && 'text-background transition-all duration-300 hover:scale-105 hover:border-[#dff976] hover:bg-[#dff976]'} h-11 w-full font-semibold`}
                     disabled={plan.basePrice === 0}
+                    onClick={() =>
+                      window.open(
+                        'https://app.trackview.app/auth/login',
+                        '_blank'
+                      )
+                    }
                   >
-                    {plan.basePrice === 0 ? 'Current Plan' : 'Upgrade'}
+                    {plan.basePrice === 0 ? 'Current Plan' : 'GO TO DASH'}
                   </Button>
 
                   {/* Features List */}

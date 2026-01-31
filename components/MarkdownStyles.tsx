@@ -160,7 +160,7 @@ export const LEGAL_MARKDOWN_THEME: Components = {
   // Body: Sans-serif for readability, justified like a contract
   p: (props) => (
     <div
-      className="mb-5 leading-7 text-foreground/85 text-[17px] font-sans text-justify"
+      className="mb-5 leading-7 text-foreground/85 text-[18px] font-sans text-justify"
       {...props}
     />
   ),
